@@ -61,7 +61,28 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// AI Agentic Colors
+				neural: {
+					blue: 'hsl(var(--neural-blue))',
+					green: 'hsl(var(--neural-green))',
+					purple: 'hsl(var(--neural-purple))'
+				},
+				space: {
+					deep: 'hsl(var(--deep-space))',
+					medium: 'hsl(var(--space-medium))',
+					light: 'hsl(var(--space-light))'
 				}
+			},
+			backgroundImage: {
+				'gradient-neural': 'var(--gradient-neural)',
+				'gradient-space': 'var(--gradient-space)',
+				'gradient-glow': 'var(--gradient-glow)'
+			},
+			boxShadow: {
+				'neural': 'var(--shadow-neural)',
+				'agent': 'var(--shadow-agent)',
+				'glow': 'var(--glow-pulse)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

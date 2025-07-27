@@ -8,35 +8,58 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* AI Agentic Theme - Midnight Blue to Neon */
+    --background: 222 47% 4%;
+    --foreground: 210 100% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 222 47% 6%;
+    --card-foreground: 210 100% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 222 47% 6%;
+    --popover-foreground: 210 100% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 195 100% 60%;
+    --primary-foreground: 222 47% 4%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 222 47% 8%;
+    --secondary-foreground: 210 100% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 222 47% 12%;
+    --muted-foreground: 210 40% 70%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 152 100% 60%;
+    --accent-foreground: 222 47% 4%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 222 47% 12%;
+    --input: 222 47% 8%;
+    --ring: 195 100% 60%;
 
-    --radius: 0.5rem;
+    /* AI Design System */
+    --neural-blue: 195 100% 60%;
+    --neural-green: 152 100% 60%;
+    --neural-purple: 270 100% 75%;
+    --deep-space: 222 47% 4%;
+    --space-medium: 222 47% 6%;
+    --space-light: 222 47% 8%;
+    
+    /* Gradients */
+    --gradient-neural: linear-gradient(135deg, hsl(var(--neural-blue)) 0%, hsl(var(--neural-green)) 100%);
+    --gradient-space: linear-gradient(180deg, hsl(var(--deep-space)) 0%, hsl(var(--space-medium)) 100%);
+    --gradient-glow: linear-gradient(90deg, hsl(var(--neural-blue) / 0.8) 0%, hsl(var(--neural-green) / 0.8) 100%);
+    
+    /* Shadows & Glows */
+    --shadow-neural: 0 0 40px hsl(var(--neural-blue) / 0.3);
+    --shadow-agent: 0 10px 40px hsl(var(--neural-blue) / 0.2);
+    --glow-pulse: 0 0 20px hsl(var(--neural-blue) / 0.6);
+    
+    /* Animations */
+    --transition-ai: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +123,118 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  }
+}
+
+/* AI Agentic Components */
+@layer components {
+  .neural-glow {
+    box-shadow: var(--glow-pulse);
+    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .agent-card {
+    @apply bg-card border border-border backdrop-blur-sm;
+    transition: var(--transition-ai);
+    box-shadow: var(--shadow-agent);
+  }
+
+  .agent-card:hover {
+    @apply border-primary;
+    box-shadow: var(--shadow-neural);
+    transform: translateY(-8px) scale(1.02);
+  }
+
+  .hero-button {
+    @apply bg-primary text-primary-foreground font-semibold;
+    background: var(--gradient-neural);
+    transition: var(--transition-ai);
+    box-shadow: var(--shadow-neural);
+  }
+
+  .hero-button:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 0 60px hsl(var(--neural-blue) / 0.4);
+  }
+
+  .neural-text {
+    background: var(--gradient-neural);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .parallax-section {
+    @apply relative min-h-screen flex items-center justify-center;
+    transform-style: preserve-3d;
+  }
+
+  .hologram-card {
+    @apply bg-card/10 backdrop-blur-md border border-primary/20;
+    background: linear-gradient(135deg, hsl(var(--card) / 0.1) 0%, hsl(var(--primary) / 0.05) 100%);
+    transition: var(--transition-ai);
+  }
+
+  .hologram-card:hover {
+    @apply border-primary/40;
+    transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+    box-shadow: 0 20px 40px hsl(var(--primary) / 0.3);
+  }
+}
+
+/* Animations */
+@layer utilities {
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(var(--neural-blue) / 0.6);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(var(--neural-blue) / 0.8);
+    }
+  }
+
+  @keyframes neural-pulse {
+    0%, 100% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes slide-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-neural-pulse {
+    animation: neural-pulse 3s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-slide-in-up {
+    animation: slide-in-up 0.8s ease-out;
   }
 }
