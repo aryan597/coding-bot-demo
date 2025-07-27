@@ -8,58 +8,58 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* AI Agentic Theme - Midnight Blue to Neon */
-    --background: 222 47% 4%;
-    --foreground: 210 100% 98%;
+    /* Minimal AI Theme - Clean and Professional */
+    --background: 0 0% 100%;
+    --foreground: 222 20% 15%;
 
-    --card: 222 47% 6%;
-    --card-foreground: 210 100% 98%;
+    --card: 0 0% 98%;
+    --card-foreground: 222 20% 15%;
 
-    --popover: 222 47% 6%;
-    --popover-foreground: 210 100% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 20% 15%;
 
-    --primary: 195 100% 60%;
-    --primary-foreground: 222 47% 4%;
+    --primary: 222 84% 5%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 222 47% 8%;
-    --secondary-foreground: 210 100% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 84% 5%;
 
-    --muted: 222 47% 12%;
-    --muted-foreground: 210 40% 70%;
+    --muted: 210 40% 95%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 152 100% 60%;
-    --accent-foreground: 222 47% 4%;
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 222 47% 12%;
-    --input: 222 47% 8%;
-    --ring: 195 100% 60%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 222 84% 5%;
 
-    /* AI Design System */
-    --neural-blue: 195 100% 60%;
-    --neural-green: 152 100% 60%;
-    --neural-purple: 270 100% 75%;
-    --deep-space: 222 47% 4%;
-    --space-medium: 222 47% 6%;
-    --space-light: 222 47% 8%;
+    /* Clean Design System */
+    --ai-blue: 217 91% 60%;
+    --ai-green: 142 76% 36%;
+    --ai-purple: 262 83% 58%;
+    --neutral-50: 210 40% 98%;
+    --neutral-100: 210 40% 96%;
+    --neutral-900: 222 84% 5%;
     
-    /* Gradients */
-    --gradient-neural: linear-gradient(135deg, hsl(var(--neural-blue)) 0%, hsl(var(--neural-green)) 100%);
-    --gradient-space: linear-gradient(180deg, hsl(var(--deep-space)) 0%, hsl(var(--space-medium)) 100%);
-    --gradient-glow: linear-gradient(90deg, hsl(var(--neural-blue) / 0.8) 0%, hsl(var(--neural-green) / 0.8) 100%);
+    /* Subtle gradients */
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--neutral-50)) 100%);
+    --gradient-code: linear-gradient(135deg, hsl(var(--ai-blue) / 0.05) 0%, hsl(var(--ai-green) / 0.05) 100%);
+    --gradient-accent: linear-gradient(90deg, hsl(var(--ai-blue)) 0%, hsl(var(--ai-purple)) 100%);
     
-    /* Shadows & Glows */
-    --shadow-neural: 0 0 40px hsl(var(--neural-blue) / 0.3);
-    --shadow-agent: 0 10px 40px hsl(var(--neural-blue) / 0.2);
-    --glow-pulse: 0 0 20px hsl(var(--neural-blue) / 0.6);
+    /* Clean shadows */
+    --shadow-soft: 0 1px 3px 0 hsl(var(--foreground) / 0.1), 0 1px 2px 0 hsl(var(--foreground) / 0.06);
+    --shadow-medium: 0 4px 6px -1px hsl(var(--foreground) / 0.1), 0 2px 4px -1px hsl(var(--foreground) / 0.06);
+    --shadow-large: 0 20px 25px -5px hsl(var(--foreground) / 0.1), 0 10px 10px -5px hsl(var(--foreground) / 0.04);
     
-    /* Animations */
-    --transition-ai: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    /* Smooth animations */
+    --transition-base: all 0.15s ease;
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --radius: 1rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -128,97 +128,88 @@ All colors MUST be HSL.
   }
 }
 
-/* AI Agentic Components */
+/* Minimal AI Components */
 @layer components {
-  .neural-glow {
-    box-shadow: var(--glow-pulse);
-    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  .minimal-card {
+    @apply bg-card border border-border;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition-smooth);
   }
 
-  .agent-card {
-    @apply bg-card border border-border backdrop-blur-sm;
-    transition: var(--transition-ai);
-    box-shadow: var(--shadow-agent);
+  .minimal-card:hover {
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-2px);
   }
 
-  .agent-card:hover {
-    @apply border-primary;
-    box-shadow: var(--shadow-neural);
-    transform: translateY(-8px) scale(1.02);
+  .clean-button {
+    @apply bg-primary text-primary-foreground;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-soft);
   }
 
-  .hero-button {
-    @apply bg-primary text-primary-foreground font-semibold;
-    background: var(--gradient-neural);
-    transition: var(--transition-ai);
-    box-shadow: var(--shadow-neural);
+  .clean-button:hover {
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-1px);
   }
 
-  .hero-button:hover {
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 0 60px hsl(var(--neural-blue) / 0.4);
-  }
-
-  .neural-text {
-    background: var(--gradient-neural);
+  .accent-text {
+    background: var(--gradient-accent);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .parallax-section {
-    @apply relative min-h-screen flex items-center justify-center;
-    transform-style: preserve-3d;
+  .code-window {
+    @apply bg-card border border-border;
+    background: var(--gradient-code);
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
   }
 
-  .hologram-card {
-    @apply bg-card/10 backdrop-blur-md border border-primary/20;
-    background: linear-gradient(135deg, hsl(var(--card) / 0.1) 0%, hsl(var(--primary) / 0.05) 100%);
-    transition: var(--transition-ai);
+  .workflow-item {
+    @apply bg-card border border-border;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-soft);
   }
 
-  .hologram-card:hover {
-    @apply border-primary/40;
-    transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
-    box-shadow: 0 20px 40px hsl(var(--primary) / 0.3);
+  .workflow-item:hover {
+    @apply border-accent;
+    box-shadow: var(--shadow-medium);
   }
 }
 
-/* Animations */
+/* Clean Animations */
 @layer utilities {
-  @keyframes pulse-glow {
-    0%, 100% {
-      box-shadow: 0 0 20px hsl(var(--neural-blue) / 0.6);
-    }
-    50% {
-      box-shadow: 0 0 40px hsl(var(--neural-blue) / 0.8);
-    }
-  }
-
-  @keyframes neural-pulse {
-    0%, 100% {
-      opacity: 0.6;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-  }
-
-  @keyframes float {
+  @keyframes gentle-float {
     0%, 100% {
       transform: translateY(0px);
     }
     50% {
-      transform: translateY(-10px);
+      transform: translateY(-5px);
     }
   }
 
-  @keyframes slide-in-up {
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes blink {
+    0%, 50% {
+      opacity: 1;
+    }
+    51%, 100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes slide-up {
     from {
       opacity: 0;
-      transform: translateY(60px);
+      transform: translateY(30px);
     }
     to {
       opacity: 1;
@@ -226,15 +217,41 @@ All colors MUST be HSL.
     }
   }
 
-  .animate-neural-pulse {
-    animation: neural-pulse 3s ease-in-out infinite;
+  @keyframes parallax-move {
+    from {
+      transform: translateX(-100px) translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0) translateY(0);
+      opacity: 1;
+    }
   }
 
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
+  .animate-gentle-float {
+    animation: gentle-float 4s ease-in-out infinite;
   }
 
-  .animate-slide-in-up {
-    animation: slide-in-up 0.8s ease-out;
+  .animate-typing {
+    animation: typing 2s steps(40, end);
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid hsl(var(--accent));
+  }
+
+  .animate-blink {
+    animation: blink 1s infinite;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.6s ease-out;
+  }
+
+  .animate-parallax-move {
+    animation: parallax-move 1s ease-out;
+  }
+
+  .parallax-transform {
+    transition: transform 0.1s ease-out;
   }
 }

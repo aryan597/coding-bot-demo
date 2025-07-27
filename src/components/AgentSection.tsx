@@ -1,90 +1,85 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button } from '@/components/ui/button';
 
 interface Agent {
   id: string;
   name: string;
-  title: string;
+  role: string;
   description: string;
-  icon: string;
-  color: string;
+  status: string;
+  tasks: string[];
 }
 
 const agents: Agent[] = [
   {
     id: 'architect',
     name: 'The Architect',
-    title: 'Digital Design Specialist',
-    description: 'I design your digital storefront in minutes—aligned perfectly with your brand.',
-    icon: '🏗️',
-    color: 'primary'
+    role: 'Design & Frontend Specialist',
+    description: 'Creates beautiful, responsive designs and user interfaces that convert visitors into customers.',
+    status: 'Designing homepage',
+    tasks: ['Brand identity', 'UI/UX design', 'Responsive layouts', 'Component systems']
   },
   {
     id: 'strategist',
     name: 'The Strategist',
-    title: 'Growth Analytics Expert',
-    description: 'I scan the web and engineer your SEO & growth strategy in real-time.',
-    icon: '📊',
-    color: 'accent'
+    role: 'SEO & Analytics Expert',
+    description: 'Analyzes market trends and optimizes your digital presence for maximum visibility and growth.',
+    status: 'Optimizing SEO',
+    tasks: ['Keyword research', 'Content strategy', 'Performance tracking', 'Growth analytics']
   },
   {
     id: 'communicator',
     name: 'The Communicator',
-    title: 'Brand Voice Manager',
-    description: 'I craft branded, verified communications to build trust and accelerate growth.',
-    icon: '✉️',
-    color: 'neural-purple'
+    role: 'Content & Brand Manager',
+    description: 'Crafts compelling content and manages your brand voice across all digital touchpoints.',
+    status: 'Writing content',
+    tasks: ['Brand messaging', 'Content creation', 'Social media', 'Email campaigns']
   }
 ];
 
-const AgentCard = ({ agent, isVisible }: { agent: Agent; isVisible: boolean }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
+const AgentCard = ({ agent, index, isVisible }: { agent: Agent; index: number; isVisible: boolean }) => {
   return (
-    <div 
-      className={`agent-card p-8 rounded-2xl transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
-      }`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Agent Avatar */}
-      <div className="relative mb-6">
-        <div className={`w-20 h-20 rounded-full bg-gradient-neural flex items-center justify-center text-3xl transition-all duration-500 ${
-          isHovered ? 'scale-110 rotate-12' : 'scale-100'
-        }`}>
-          {agent.icon}
-        </div>
-        {isHovered && (
-          <div className="absolute inset-0 w-20 h-20 rounded-full bg-primary/20 animate-ping" />
-        )}
-      </div>
-
-      {/* Agent Info */}
-      <div className="space-y-4">
+    <div className={`minimal-card p-8 rounded-xl transition-all duration-600 ${
+      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+    }`} style={{ transitionDelay: `${index * 150}ms` }}>
+      
+      {/* Header */}
+      <div className="flex items-start justify-between mb-6">
         <div>
-          <h3 className="text-2xl font-bold text-foreground mb-1">{agent.name}</h3>
-          <p className="text-sm text-primary font-medium tracking-wide uppercase">
-            {agent.title}
+          <h3 className="text-2xl font-bold text-foreground mb-2">{agent.name}</h3>
+          <p className="text-accent font-medium text-sm uppercase tracking-wide">
+            {agent.role}
           </p>
         </div>
-
-        {/* Speech Bubble Effect */}
-        <div className="relative">
-          <div className={`p-4 bg-muted/30 rounded-lg border-l-4 border-primary transition-all duration-300 ${
-            isHovered ? 'bg-muted/50 scale-105' : ''
-          }`}>
-            <p className="text-muted-foreground italic">"{agent.description}"</p>
-          </div>
-          {isHovered && (
-            <div className="absolute -bottom-2 left-6 w-4 h-4 bg-muted/50 rotate-45 border-b border-r border-primary/20" />
-          )}
+        <div className="flex items-center space-x-2 bg-muted px-3 py-1 rounded-full">
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+          <span className="text-xs font-medium text-muted-foreground">Active</span>
         </div>
+      </div>
 
-        {/* Status Indicator */}
-        <div className="flex items-center space-x-2 text-sm">
-          <div className={`w-2 h-2 rounded-full bg-accent animate-pulse`} />
-          <span className="text-accent font-medium">Agent Online</span>
+      {/* Description */}
+      <p className="text-muted-foreground leading-relaxed mb-6">
+        {agent.description}
+      </p>
+
+      {/* Current Status */}
+      <div className="mb-6 p-4 bg-muted/50 rounded-lg">
+        <div className="flex items-center space-x-2 mb-2">
+          <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" />
+          <span className="text-sm font-medium text-foreground">Currently:</span>
+        </div>
+        <p className="text-sm text-muted-foreground">{agent.status}</p>
+      </div>
+
+      {/* Capabilities */}
+      <div>
+        <h4 className="text-sm font-semibold text-foreground mb-3">Core Capabilities</h4>
+        <div className="space-y-2">
+          {agent.tasks.map((task, taskIndex) => (
+            <div key={taskIndex} className="flex items-center space-x-3">
+              <div className="w-1 h-1 bg-accent rounded-full" />
+              <span className="text-sm text-muted-foreground">{task}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -92,100 +87,74 @@ const AgentCard = ({ agent, isVisible }: { agent: Agent; isVisible: boolean }) =
 };
 
 export const AgentSection = () => {
-  const [visibleAgents, setVisibleAgents] = useState<string[]>([]);
-  const agentRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [visibleAgents, setVisibleAgents] = useState<boolean[]>(Array(agents.length).fill(false));
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const agentId = entry.target.getAttribute('data-agent-id');
-            if (agentId && !visibleAgents.includes(agentId)) {
-              setTimeout(() => {
-                setVisibleAgents(prev => [...prev, agentId]);
-              }, agents.findIndex(a => a.id === agentId) * 300);
-            }
+            setVisibleAgents(Array(agents.length).fill(true));
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     );
 
-    agentRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
 
     return () => observer.disconnect();
-  }, [visibleAgents]);
+  }, []);
 
   return (
-    <section className="relative py-32 bg-background">
-      {/* Section Header */}
-      <div className="text-center mb-20 px-6">
-        <h2 className="text-4xl md:text-6xl font-bold mb-6">
-          Meet Your <span className="neural-text">AI Team</span>
-        </h2>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Three specialized agents working in perfect harmony to transform your business
-        </p>
-      </div>
-
-      {/* Agents Grid */}
+    <section ref={sectionRef} className="py-32 bg-gradient-subtle">
       <div className="max-w-7xl mx-auto px-6">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            Meet Your <span className="accent-text">AI Team</span>
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Three specialized agents working together to build and grow your business
+          </p>
+        </div>
+
+        {/* Agents Grid */}
         <div className="grid md:grid-cols-3 gap-8">
           {agents.map((agent, index) => (
-            <div
+            <AgentCard
               key={agent.id}
-              ref={(el) => (agentRefs.current[index] = el)}
-              data-agent-id={agent.id}
-              className="parallax-section min-h-0"
-            >
-              <AgentCard 
-                agent={agent} 
-                isVisible={visibleAgents.includes(agent.id)} 
-              />
-            </div>
+              agent={agent}
+              index={index}
+              isVisible={visibleAgents[index]}
+            />
           ))}
         </div>
-      </div>
 
-      {/* Connecting Lines Animation */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <svg className="w-full h-full" viewBox="0 0 1200 800">
-          <defs>
-            <linearGradient id="connectionGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style={{ stopColor: 'hsl(var(--primary))', stopOpacity: 0 }} />
-              <stop offset="50%" style={{ stopColor: 'hsl(var(--primary))', stopOpacity: 0.6 }} />
-              <stop offset="100%" style={{ stopColor: 'hsl(var(--accent))', stopOpacity: 0 }} />
-            </linearGradient>
-          </defs>
-          
-          {visibleAgents.length > 1 && (
-            <>
-              <path
-                d="M300,400 Q600,200 900,400"
-                stroke="url(#connectionGrad)"
-                strokeWidth="2"
-                fill="none"
-                className="animate-pulse"
-              />
-              <path
-                d="M300,400 Q600,600 900,400"
-                stroke="url(#connectionGrad)"
-                strokeWidth="2"
-                fill="none"
-                className="animate-pulse"
-                style={{ animationDelay: '1s' }}
-              />
-            </>
-          )}
-        </svg>
+        {/* Team Stats */}
+        <div className="mt-16 pt-8 border-t border-border">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            {[
+              { value: '24/7', label: 'Active Monitoring' },
+              { value: '< 1min', label: 'Response Time' },
+              { value: '99.9%', label: 'Uptime' },
+              { value: '∞', label: 'Scalability' }
+            ].map((stat, index) => (
+              <div key={index}>
+                <div className="text-2xl md:text-3xl font-bold accent-text mb-1">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-
-      {/* Background Particles */}
-      <div className="absolute top-0 left-1/4 w-1 h-32 bg-gradient-to-b from-primary/30 to-transparent animate-pulse" />
-      <div className="absolute bottom-0 right-1/3 w-1 h-24 bg-gradient-to-t from-accent/30 to-transparent animate-pulse" style={{ animationDelay: '2s' }} />
     </section>
   );
 };
